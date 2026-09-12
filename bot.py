@@ -16,8 +16,8 @@ COUPANG_SECRET_KEY = "50ebea131cf2a08d989317ef2f1c3afa80a848b8"
 GMAIL_ADDRESS = "ihsboy4488@gmail.com"
 GMAIL_APP_PW = "epml hwte hzaa fbet"
 
-# 수신자 목록 (본인 메일 및 동료 관리자 메일들을 쉼표로 구분)
-RECEIVER_LIST = [GMAIL_ADDRESS] # 예: ["내메일@gmail.com", "동료메일@gmail.com"]
+# 수신자 목록
+RECEIVER_LIST = [GMAIL_ADDRESS]
 
 # 구글 클라우드 고정 IP 서버 주소 (토스 API 우회용)
 GCP_TOSS_PROXY = "http://34.44.7.69:8000/make-toss-message"
@@ -76,34 +76,56 @@ def send_email(subject, content):
         print(f"Email failed: {e}")
 
 def main():
-    print("Starting deal automation...")
+    print("밀키트, 식품, 생활용품 특가 비교 및 간식 방어 수집 시작...")
     
+    # 🛒 사진 속 내용에 기반한 밀키트, 식품, 생활용품 및 간식 방어 품목 리스트
     hotdeals = [
         {
-            "name": "Sample Product",
-            "toss_price": 24000, "coupang_price": 28000,
+            "name": "[간식방어/식품] 프레시지 밀키트 및 국탕류 대용량 세트",
+            "toss_price": 14900, 
+            "coupang_price": 16500,
             "toss_url": "https://shopping.toss.im/...",
             "coupang_url": "https://www.coupang.com/vp/...",
-            "comment": "🔥 Hot Deal!"
+            "comment": "🍲 간편식 및 밀키트 간식 방어! 토스가 더 저렴합니다."
+        },
+        {
+            "name": "[생활용품] 일상 생필품 및 주방 세제/티슈 묶음",
+            "toss_price": 18900, 
+            "coupang_price": 17200,
+            "toss_url": "https://shopping.toss.im/...",
+            "coupang_url": "https://www.coupang.com/vp/...",
+            "comment": "🧻 쟁여두기 필수 생활용품! 쿠팡 특가 적용."
+        },
+        {
+            "name": "[식품] 실속형 간식 및 스낵류 박스 포장",
+            "toss_price": 9900, 
+            "coupang_price": 11000,
+            "toss_url": "https://shopping.toss.im/...",
+            "coupang_url": "https://www.coupang.com/vp/...",
+            "comment": "🍪 당충전 및 사무실 간식 방어용 특가상품!"
         }
     ]
 
-    final_mail_content = "Today's Best Deals:\n\n"
+    final_mail_content = "🛒 [자동화] 밀키트·식품·생활용품 최저가 핫딜 모음\n\n"
 
     for deal in hotdeals:
+        # 토스와 쿠팡 가격 비교 후 더 저렴한 쪽으로 자동 분기
         if deal["toss_price"] <= deal["coupang_price"]:
             formatted_msg = get_toss_monetized_link(
                 deal["toss_url"], 
                 deal["name"], 
-                deal["comment"]
+                f"{deal['comment']}\n💰 가격 비교: 토스 {deal['toss_price']:,}원 vs 쿠팡 {deal['coupang_price']:,}원"
             )
             if formatted_msg:
                 final_mail_content += formatted_msg + "\n\n"
+            else:
+                final_mail_content += f"{deal['comment']}\n{deal['name']}\n👉 토스 최저가: {deal['toss_price']:,}원\n{deal['toss_url']}\n\n"
         else:
             short_link = get_coupang_link(deal["coupang_url"])
-            final_mail_content += f"{deal['comment']}\n{deal['name']}\n👉 Price: {deal['coupang_price']:,} KRW (Coupang)\n{short_link}\n\n"
+            final_mail_content += f"{deal['comment']}\n{deal['name']}\n👉 쿠팡 최저가: {deal['coupang_price']:,}원 (토스 비교가: {deal['toss_price']:,}원)\n{short_link}\n\n"
 
-    send_email("[Automation] Daily Deals", final_mail_content)
+    # 최종 메일 발송
+    send_email("[Automation] 밀키트·식품·생활용품 핫딜 모음", final_mail_content)
 
 if __name__ == "__main__":
     main()
