@@ -10,11 +10,11 @@ from email.mime.multipart import MIMEMultipart
 # ==========================================
 # 1. 환경 변수 설정 (GitHub Secrets에서 가져옴)
 # ==========================================
-COUPANG_ACCESS_KEY = os.environ.get("COUPANG_ACCESS_KEY")
-COUPANG_SECRET_KEY = os.environ.get("COUPANG_SECRET_KEY")
+COUPANG_ACCESS_KEY = os.environ.get("42800da7-2349-4510-9125-3ea8be9f9fa9")
+COUPANG_SECRET_KEY = os.environ.get("50ebea131cf2a08d989317ef2f1c3afa80a848b8")
 
-GMAIL_ADDRESS = os.environ.get("MY_EMAIL")
-GMAIL_APP_PW = os.environ.get("APP_PASSWORD")
+GMAIL_ADDRESS = os.environ.get("ihsboy4488@gmail.com")
+GMAIL_APP_PW = os.environ.get("epml hwte hzaa fbet")
 
 # 수신자 목록 (다중 발송 지원: 쉼표로 구분된 메일들을 리스트로 변환)
 RECEIVER_EMAILS_STR = os.environ.get("RECEIVER_EMAILS", GMAIL_ADDRESS)
