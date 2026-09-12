@@ -7,17 +7,21 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-# 환경 변수 설정
-COUPANG_ACCESS_KEY = os.environ.get("COUPANG_ACCESS_KEY")
-COUPANG_SECRET_KEY = os.environ.get("COUPANG_SECRET_KEY")
+# ===================================================
+# 🔑 [직접 입력 구간] 쿠팡 및 지메일 정보를 여기에 바로 넣으세요
+# ===================================================
+COUPANG_ACCESS_KEY = "42800da7-2349-4510-9125-3ea8be9f9fa9"
+COUPANG_SECRET_KEY = "50ebea131cf2a08d989317ef2f1c3afa80a848b8"
 
-GMAIL_ADDRESS = os.environ.get("MY_EMAIL")
-GMAIL_APP_PW = os.environ.get("APP_PASSWORD")
+GMAIL_ADDRESS = "ihsboy4488@gmail.com"
+GMAIL_APP_PW = "epml hwte hzaa fbet"
 
-RECEIVER_EMAILS_STR = os.environ.get("RECEIVER_EMAILS", GMAIL_ADDRESS)
-RECEIVER_LIST = [email.strip() for email in RECEIVER_EMAILS_STR.split(",")]
+# 수신자 목록 (본인 메일 및 동료 관리자 메일들을 쉼표로 구분)
+RECEIVER_LIST = [GMAIL_ADDRESS] # 예: ["내메일@gmail.com", "동료메일@gmail.com"]
 
+# 구글 클라우드 고정 IP 서버 주소 (토스 API 우회용)
 GCP_TOSS_PROXY = "http://34.44.7.69:8000/make-toss-message"
+# ===================================================
 
 def get_coupang_link(url):
     method = "POST"
