@@ -30,4 +30,4 @@ jobs:
           APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
           RECEIVER_EMAILS: ${{ secrets.RECEIVER_EMAILS }}
         run: |
-          python 봇.py
+          python bot.py
